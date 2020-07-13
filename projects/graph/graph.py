@@ -3,9 +3,11 @@ Simple graph implementation
 """
 from util import Stack, Queue  # These may come in handy
 
+
 class Graph:
 
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
+
     def __init__(self):
         self.vertices = {}
 
@@ -13,19 +15,19 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        self.vertices[v1].add(v2)
 
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
+        return self.vertices[vertex_id]
 
     def bft(self, starting_vertex):
         """
@@ -33,6 +35,30 @@ class Graph:
         beginning from starting_vertex.
         """
         pass  # TODO
+        # make a queue
+        q = Queue()
+        # enqueue our starting node
+        q.enqueue(starting_vertex)
+
+        # make a set to track if we've been here before
+        visited = set()
+
+        # while our queue isn't empty
+        while q.size() > 0:
+            # dequeue whatever's at the front of our line, this is our current_node
+            current_node = q.dequeue()
+        # if we haven't visited this node yet,
+            if current_node not in visited:
+                # print/run
+                print(current_node)
+                # mark as visited
+                visited.add(current_node)
+        # get its neighbors
+                # neighbors = self.get_neighbors()
+        # for each of the neighbors,
+                for neighbor in self.get_neighbors(current_node):
+                    # add to queue
+                    q.enqueue(neighbor)
 
     def dft(self, starting_vertex):
         """
@@ -40,6 +66,27 @@ class Graph:
         beginning from starting_vertex.
         """
         pass  # TODO
+        # make a stack
+        s = Stack()
+        # push on our starting node
+        s.push(starting_vertex)
+        # make a set to track if we've been here before
+        visited = set()
+        # while our stack isn't empty
+        while s.size() > 0:
+            # pop off whatever's on top, this is current_node
+            v = s.pop()
+        # if we haven't visited this vertex before
+            if v not in visited:
+                # run function / print
+                print(v)
+        # mark as visited
+                visited.add(v)
+        # get its neighbors
+        # for each of the neighbors
+                for next_vertex in self.get_neighbors(v):
+                    # add to our stack
+                    s.push(next_vertex)
 
     def dft_recursive(self, starting_vertex):
         """
@@ -75,6 +122,7 @@ class Graph:
         This should be done using recursion.
         """
         pass  # TODO
+
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
