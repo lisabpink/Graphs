@@ -1,28 +1,22 @@
 import random
 import time
 
-
 class Queue():
     def __init__(self):
         self.queue = []
-
     def enqueue(self, value):
         self.queue.append(value)
-
     def dequeue(self):
         if self.size() > 0:
             return self.queue.pop(0)
         else:
             return None
-
     def size(self):
         return len(self.queue)
-
 
 class User:
     def __init__(self, name):
         self.name = name
-
 
 class SocialGraph:
     def __init__(self):
@@ -73,13 +67,13 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
-        # use num_users
+        ## use num_users
         for user in range(num_users):
             self.add_user(user)
 
         # Create friendships
-        # make a list with all POSSIBLE friendships
-        # Example:
+        ## make a list with all POSSIBLE friendships
+        ### Example:
         # 5 users
         # [(1, 2), (1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5), (3, 4), (3, 5), (4, 5)]
         friendships = []
@@ -88,17 +82,17 @@ class SocialGraph:
                 friendship = (user, friend)
                 friendships.append(friendship)
 
-        # Shuffle the list
+        ## Shuffle the list
         self.fisher_yates_shuffle(friendships)
 
-        # Take as many as we need
+        ## Take as many as we need
         total_friendships = num_users * avg_friendships
 
         random_friendships = friendships[:total_friendships//2]
-        # add to self.friendships
+        ## add to self.friendships
         for friendship in random_friendships:
             self.add_friendship(friendship[0], friendship[1])
-
+        
     def linear_populate_graph(self, num_users, avg_friendships):
         # Reset graph
         self.last_id = 0
@@ -106,23 +100,24 @@ class SocialGraph:
         self.friendships = {}
 
         # Add users
-        # use num_users
+        ## use num_users
         for user in range(num_users):
             self.add_user(user)
 
         # linear way to add the number of friendships we need?
         target_number_friendships = num_users * avg_friendships
         friendships_created = 0
-        # as long as we haven't made all the friendships we need
+        ## as long as we haven't made all the friendships we need
         while friendships_created < target_number_friendships:
-            # pick 2 random numbers between 1 and the last id
+        ## pick 2 random numbers between 1 and the last id
             friend_one = random.randint(1, self.last_id)
             friend_two = random.randint(1, self.last_id)
-        # try to create that friendship
+        ## try to create that friendship
             friendship_was_made = self.add_friendship(friend_one, friend_two)
-        # if we can, increment friendships by 2
+        ### if we can, increment friendships by 2
             if friendship_was_made:
                 friendships_created += 2
+
 
     def get_all_social_paths(self, user_id):
         """
@@ -132,31 +127,36 @@ class SocialGraph:
         extended network with the shortest friendship path between them.
 
         The key is the friend's ID and the value is the path.
+
+        Plan: BFT, use dictionary as visited
         """
         visited = {}  # Note that this is a dictionary, not a set
+
         q = Queue()
         q.enqueue([user_id])
 
         # while q isn't empty
         while q.size() > 0:
-            # dequeue the current path
+        ## dequeue the current path
             current_path = q.dequeue()
 
-        # grab last vertex from path
+        ## grab last vertex from path
             current_user = current_path[-1]
 
-            # if it hasn't been visited
+            ## if it hasn't been visited
             if current_user not in visited:
-                # add to our dictionary
-                #### { friend_id: path }
+        ### add to our dictionary
+        #### { friend_id: path }
                 visited[current_user] = current_path
 
                 friends = self.friendships[current_user]
-        # then enqueue PATHS TO each of our neighbors
+        ### then enqueue PATHS TO each of our neighbors
                 for friend in friends:
                     path_to_friend = current_path + [friend]
 
                     q.enqueue(path_to_friend)
+        
+        
         return visited
 
 
@@ -175,7 +175,7 @@ if __name__ == '__main__':
     start_time = time.time()
     sg.linear_populate_graph(num_users, avg_friendships)
     end_time = time.time()
-
+    
     print(f"Populate graph linear: {end_time - start_time}")
 
     # connections = sg.get_all_social_paths(1)
@@ -187,8 +187,8 @@ if __name__ == '__main__':
     # print(f'{(len(connections) - 1) / 1000 * 100}%')
 
     # What is the average degree of separation between a user and those in his/her extended network?
-    # average length of a path to each user
-    # traverse a user's extended connections, gather lengths, sum,
+    ## average length of a path to each user
+    # traverse a user's extended connections, gather lengths, sum, 
     # total_lengths = 0
     # for friend in connections:
     #     total_lengths += len(connections[friend])
