@@ -1,9 +1,13 @@
 from room import Room
 from player import Player
 from world import World
+from utils import Queue, Stack
 
 import random
 from ast import literal_eval
+
+import time
+import sys
 
 # Load world
 world = World()

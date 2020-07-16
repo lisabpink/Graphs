@@ -1,5 +1,6 @@
 class Player:
     def __init__(self, starting_room):
+        # self.name = name
         self.current_room = starting_room
 
     def travel(self, direction, show_rooms=False):

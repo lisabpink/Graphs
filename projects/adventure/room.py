@@ -18,9 +18,6 @@ class Room:
     def print_room_description(self, player):
         print(str(self))
 
-    def __repr__(self):
-        return self.name
-
     def get_exits(self):
         exits = []
         if self.n_to is not None:
