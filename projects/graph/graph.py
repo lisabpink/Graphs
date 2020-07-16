@@ -187,21 +187,22 @@ class Graph:
 
         This should be done using recursion.
         """
-
+        # if not visited
+        # make a set to track if we've been here before
         if visited == None:
             visited = set()
-
         if path == None:
             path = []
-
+         # mark as visited
         visited.add(starting_vertex)
         new_path = [*path, starting_vertex]
-
         if new_path[-1] == destination_vertex:
             return new_path
-
+        # for each neighbor
         for neighbor in self.get_neighbors(starting_vertex):
+            # if neighbor not visited
             if neighbor not in visited:
+                # recurse
                 neighbor_path = self.dfs_recursive(
                     neighbor, destination_vertex, visited, new_path)
                 if neighbor_path:
